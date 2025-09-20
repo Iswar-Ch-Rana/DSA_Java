@@ -29,6 +29,7 @@ public class RearrangeArray {
         return ans;
     }
 
+    /** Solution - 1 TIME -  O(N+N/2) Space - O(N) */
     public int[] rearrangeArray1(int[] nums) {
         int n = nums.length;
 
