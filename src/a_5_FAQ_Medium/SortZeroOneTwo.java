@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class SortZeroOneTwo {
     public static void main(String[] args) {
-        a_5_FAQ_Medium.SortZeroOneTwo obj = new a_5_FAQ_Medium.SortZeroOneTwo();
+        SortZeroOneTwo obj = new SortZeroOneTwo();
         int[] arr1 = {1, 0, 2, 1, 0};
         int[] arr2 = {0, 0, 1, 1, 1};
         int[] arr3 = {1, 1, 2, 2, 1};
