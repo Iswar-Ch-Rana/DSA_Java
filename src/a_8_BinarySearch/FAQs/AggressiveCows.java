@@ -1,4 +1,4 @@
-package a_8_BinarySearch.OnAnswers;
+package a_8_BinarySearch.FAQs;
 
 import java.util.Arrays;
 
