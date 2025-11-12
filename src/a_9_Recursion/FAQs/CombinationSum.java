@@ -1,4 +1,4 @@
-package a_9_Recursion.SubsequencePatternProblems;
+package a_9_Recursion.FAQs;
 
 import java.util.ArrayList;
 import java.util.List;
