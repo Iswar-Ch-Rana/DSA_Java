@@ -37,6 +37,12 @@ public class LinkedList {
         //        head = deleteTail(head);
         //        head = deleteKthNode(head, 4);
         //        head = deleteNodeWithValueX(head, 20);
+
+        // Insertion from LinkedList
+        //        head = insertAtHead(head, 1);
+        //        head = insertAtTail(head, 1);
+        //        head = insertAtKthPosition(head, 1, 1);
+        //        head = insertBeforeX(head, 2, 5);
          */
         printLinkedList(head);
 
@@ -157,6 +163,93 @@ public class LinkedList {
         if (current.next != null) {
             current.next = current.next.next;
         }
+
+        return head;
+    }
+
+    // Insertion at the head of LL
+    public static Node insertAtHead(Node head, int X) {
+        Node temp = new Node(X);
+        temp.next = head;
+        return temp;
+    }
+
+    // Insertion at the tail of LL
+    public static Node insertAtTail(Node head, int X) {
+        if (head == null)
+            return new Node(X);
+
+        Node temp = head;
+        // Traversing until the last node
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = new Node(X);
+        return head;
+    }
+
+    // Insertion at the Kth position of LL
+    public static Node insertAtKthPosition(Node head, int X, int K) {
+        if (K <= 0) return head; // Invalid K
+
+        if (K == 1) { // Insert at the head
+            return new Node(X, head);
+        }
+
+        // Traverse to find Kth position
+        Node temp = head;
+        int count = 1;
+
+        while (temp != null && count < K - 1) {
+            temp = temp.next;
+            count++;
+        }
+
+        // If temp is null, K > length, insert at end
+        Node newNode = new Node(X);
+
+        if (temp == null) {
+            // Insert at the end
+            Node curr = head;
+            while (curr.next != null) curr = curr.next;
+            curr.next = newNode;
+        } else {
+            // Normal case: insert at Kth position
+            newNode.next = temp.next;
+            temp.next = newNode;
+        }
+
+        return head;
+    }
+
+    // Insertion before the value X in LL
+    public static Node insertBeforeX(Node head, int X, int val) {
+        if (head == null) {
+            return new Node(X); // If list is empty, return new node
+        }
+
+        // If value to insert before is at head
+        if (head.data == val) {
+            return new Node(X, head);
+        }
+
+        Node temp = head;
+        Node prev = null;
+
+        // Find the node with value 'val'
+        while (temp != null && temp.data != val) {
+            prev = temp;
+            temp = temp.next;
+        }
+
+        // If value not found, return head as it is
+        if (temp == null) return head;
+
+        // Create new node and insert before target node
+        Node newNode = new Node(X);
+        prev.next = newNode;
+        newNode.next = temp;
 
         return head;
     }
