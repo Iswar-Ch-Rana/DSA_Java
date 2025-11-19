@@ -1,4 +1,4 @@
-package a_10_Linked_List.Fundamentals_Doubly_LL;
+package a_10_Linked_List.Fundamentals_Single_LL;
 
 class Node {
     int data;
