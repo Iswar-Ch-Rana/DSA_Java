@@ -4,17 +4,17 @@ public class ListNode {
     public int val;
     public ListNode next;
 
-    ListNode() {
+    public ListNode() {
         val = 0;
         next = null;
     }
 
-    ListNode(int data1) {
+    public ListNode(int data1) {
         val = data1;
         next = null;
     }
 
-    ListNode(int data1, ListNode next1) {
+    public ListNode(int data1, ListNode next1) {
         val = data1;
         next = next1;
     }
