@@ -228,4 +228,22 @@ public class ListNode {
 
         return head;
     }
+
+    public static void createCycle(ListNode head, int pos) {
+        if (pos < 0) return;
+
+        ListNode tail = head;
+        ListNode loopNode = null;
+        int index = 0;
+
+        while (tail.next != null) {
+            if (index == pos) {
+                loopNode = tail;
+            }
+            tail = tail.next;
+            index++;
+        }
+        // Connect last node to loopNode to create the cycle
+        tail.next = loopNode;
+    }
 }
