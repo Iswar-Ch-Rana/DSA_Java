@@ -9,7 +9,35 @@ public class RotateList {
         ListNode.printLinkedList(head);
     }
 
+    // Most optimise
     public static ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null) return head;
+
+        // Step 1: Find length and connect tail to head (make circular list)
+        int size = 1;
+        ListNode tail = head;
+        while (tail.next != null) {
+            tail = tail.next;
+            size++;
+        }
+        tail.next = head;  // Create the circular linked list
+
+        // Step 2: Find new tail (size - k % size - 1) and new head (next of new tail)
+        k = k % size;
+        int stepsToNewTail = size - k;
+        ListNode newTail = head;
+        for (int i = 1; i < stepsToNewTail; i++) {
+            newTail = newTail.next;
+        }
+
+        // Step 3: Set new head and break the cycle
+        ListNode newHead = newTail.next;
+        newTail.next = null;
+
+        return newHead;
+    }
+
+    public static ListNode rotateRight1(ListNode head, int k) {
         if (head == null || head.next == null || k == 0) return head;
 
         // Step 1: Find length
