@@ -11,6 +11,29 @@ public class SingleNumberII {
         System.out.println(singleNumber(new int[]{}));
     }
 
+    public static int singleNumber(int[] nums) {
+        // 'ones' stores bits of elements appearing exactly once
+        // 'twos' stores bits of elements appearing exactly twice
+        int ones = 0, twos = 0;
+
+        // Traverse all numbers
+        for (int num : nums) {
+
+            // Step 1: XOR current number with 'ones'
+            //         But only for bits not set in 'twos' (to avoid adding a twice-occurring number)
+            ones = (ones ^ num) & ~twos;
+
+            // Step 2: XOR current number with 'twos'
+            //         But only for bits not present in updated 'ones'
+            //         Because if bit is now in 'ones', it means it appeared once, so it shouldn't go in 'twos'
+            twos = (twos ^ num) & ~ones;
+        }
+
+        // At the end, 'ones' will hold the bits of the number that appeared only once.
+        return ones;
+    }
+
+
     public static int singleNumber3(int[] nums) {
         if (nums.length == 0) return 0;
         // Variable to store size of array
