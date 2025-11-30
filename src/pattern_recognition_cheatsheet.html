@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Pattern Recognition Cheat Sheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #ddd6fe 100%);
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 3rem;
+        }
+
+        .header {
+            border-bottom: 4px solid #4f46e5;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #312e81;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #6b7280;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #4338ca;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #4338ca;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #4f46e5;
+            padding-left: 1rem;
+        }
+
+        .constraint-box {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+
+        .small-n {
+            background: #f0fdf4;
+            border-color: #22c55e;
+        }
+
+        .medium-n {
+            background: #fefce8;
+            border-color: #eab308;
+        }
+
+        .large-n {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+
+        .constraint-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .small-n h3 { color: #166534; }
+        .medium-n h3 { color: #854d0e; }
+        .large-n h3 { color: #991b1b; }
+
+        .constraint-box ul {
+            margin-left: 1.5rem;
+        }
+
+        .constraint-box li {
+            margin: 0.5rem 0;
+            color: #374151;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card ul {
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .card li {
+            margin: 0.4rem 0;
+        }
+
+        .card strong {
+            color: #1f2937;
+        }
+
+        /* Input Format Colors */
+        .tree-card { background: #dbeafe; }
+        .tree-card h3 { color: #1e3a8a; }
+
+        .graph-card { background: #e9d5ff; }
+        .graph-card h3 { color: #581c87; }
+
+        .grid-card { background: #ccfbf1; }
+        .grid-card h3 { color: #065f46; }
+
+        .sorted-card { background: #fed7aa; }
+        .sorted-card h3 { color: #9a3412; }
+
+        .string-card { background: #fce7f3; }
+        .string-card h3 { color: #831843; }
+
+        .linked-card { background: #d1fae5; }
+        .linked-card h3 { color: #065f46; }
+
+        /* Output Format */
+        .output-item {
+            border-left: 4px solid #6366f1;
+            padding: 1rem 0 1rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .output-item h3 {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .output-item p {
+            color: #4b5563;
+        }
+
+        /* Keyword Pattern Colors */
+        .keyword-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .keyword-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .dp-card { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); }
+        .dp-card h3 { color: #1e3a8a; }
+
+        .twopointer-card { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); }
+        .twopointer-card h3 { color: #065f46; }
+
+        .heap-card { background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%); }
+        .heap-card h3 { color: #581c87; }
+
+        .stack-card { background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%); }
+        .stack-card h3 { color: #9a3412; }
+
+        .monotonic-card { background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%); }
+        .monotonic-card h3 { color: #991b1b; }
+
+        .hashmap-card { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+        .hashmap-card h3 { color: #78350f; }
+
+        .trie-card { background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%); }
+        .trie-card h3 { color: #115e59; }
+
+        .greedy-card { background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); }
+        .greedy-card h3 { color: #831843; }
+
+        .union-card { background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); }
+        .union-card h3 { color: #3730a3; }
+
+        .binary-card { background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); }
+        .binary-card h3 { color: #1f2937; }
+
+        .bit-card { background: linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%); }
+        .bit-card h3 { color: #164e63; }
+
+        .math-card { background: linear-gradient(135deg, #ecfccb 0%, #d9f99d 100%); }
+        .math-card h3 { color: #365314; }
+
+        .game-card { background: linear-gradient(135deg, #ffe4e6 0%, #fecdd3 100%); }
+        .game-card h3 { color: #881337; }
+
+        .sliding-card { background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%); }
+        .sliding-card h3 { color: #78350f; }
+
+        .tips-box {
+            background: #eef2ff;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .tips-box h2 {
+            font-size: 1.8rem;
+            color: #312e81;
+            margin-bottom: 1rem;
+        }
+
+        .tips-box ul {
+            margin-left: 1.5rem;
+        }
+
+        .tips-box li {
+            margin: 0.75rem 0;
+            color: #1f2937;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .download-btn {
+                display: none;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 1rem;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1>Algorithm Pattern Recognition</h1>
+        <p>Quick Reference Guide for Competitive Programming</p>
+        <button class="download-btn" onclick="window.print()">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download PDF
+        </button>
+    </div>
+
+    <!-- Step 1: Constraints -->
+    <div class="section">
+        <h2 class="section-title">Step 1: Check The Constraints</h2>
+
+        <div class="constraint-box small-n">
+            <h3>Small n (≤ 20)</h3>
+            <ul>
+                <li>Brute force approaches are viable</li>
+                <li>Backtracking and recursion</li>
+                <li>Exponential time complexity (2<sup>n</sup>, n!) is acceptable</li>
+                <li>Try all possible combinations/permutations</li>
+            </ul>
+        </div>
+
+        <div class="constraint-box medium-n">
+            <h3>Medium n (10³ to 10⁶)</h3>
+            <ul>
+                <li>❌ No brute force solutions</li>
+                <li>Linear time O(n) or O(n log n) solutions</li>
+                <li>Greedy algorithms</li>
+                <li>Two pointers technique</li>
+                <li>Heap-based solutions</li>
+                <li>Dynamic programming</li>
+                <li>Sorting algorithms</li>
+            </ul>
+        </div>
+
+        <div class="constraint-box large-n">
+            <h3>Large n (≥ 10⁷)</h3>
+            <ul>
+                <li>❌ No linear time solutions</li>
+                <li>O(log n) solutions only</li>
+                <li>Binary search</li>
+                <li>Mathematical formulas</li>
+                <li>O(1) constant time approaches</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Step 2: Input Format -->
+    <div class="section">
+        <h2 class="section-title">Step 2: Analyze Input Format</h2>
+
+        <div class="grid">
+            <div class="card tree-card">
+                <h3>Tree/Binary Tree/BST</h3>
+                <ul>
+                    <li><strong>DFS</strong> for: all paths, recursive exploration, preorder/inorder/postorder</li>
+                    <li><strong>BFS</strong> for: level-by-level, shortest path in unweighted tree</li>
+                    <li>Consider tree properties and parent-child relationships</li>
+                </ul>
+            </div>
+
+            <div class="card graph-card">
+                <h3>Graph (nodes + edges)</h3>
+                <ul>
+                    <li><strong>BFS</strong> for shortest path</li>
+                    <li><strong>DFS</strong> for connected components</li>
+                    <li><strong>Union Find</strong> for "connected components" or "number of groups"</li>
+                    <li><strong>Topological Sort</strong> for dependencies</li>
+                    <li><strong>Dijkstra/Bellman-Ford</strong> for weighted shortest path</li>
+                </ul>
+            </div>
+
+            <div class="card grid-card">
+                <h3>2D Grid/Matrix</h3>
+                <ul>
+                    <li><strong>DFS/BFS</strong> for "islands" problems</li>
+                    <li><strong>Union Find</strong> for connected regions</li>
+                    <li><strong>Dynamic Programming</strong> for path problems</li>
+                    <li>Consider 4-directional or 8-directional movement</li>
+                </ul>
+            </div>
+
+            <div class="card sorted-card">
+                <h3>Sorted Array</h3>
+                <ul>
+                    <li><strong>Two Pointers</strong> technique</li>
+                    <li><strong>Binary Search</strong></li>
+                    <li><strong>Greedy</strong> approach</li>
+                    <li>Merge operations</li>
+                </ul>
+            </div>
+
+            <div class="card string-card">
+                <h3>String</h3>
+                <ul>
+                    <li><strong>Two Pointers</strong> for palindromes</li>
+                    <li><strong>Sliding Window</strong> for substrings</li>
+                    <li><strong>Trie</strong> for word problems</li>
+                    <li><strong>Stack</strong> for parentheses/brackets</li>
+                    <li><strong>KMP/Z-algorithm</strong> for pattern matching</li>
+                </ul>
+            </div>
+
+            <div class="card linked-card">
+                <h3>Linked List</h3>
+                <ul>
+                    <li><strong>Two Pointers</strong> (fast/slow)</li>
+                    <li><strong>Dummy Node</strong> techniques</li>
+                    <li><strong>Cycle Detection</strong> (Floyd's algorithm)</li>
+                    <li>Reversal techniques</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Output Format -->
+    <div class="section">
+        <h2 class="section-title">Step 3: Analyze Output Format</h2>
+
+        <div class="output-item">
+            <h3>List of Lists (combinations, subsets, paths)</h3>
+            <p>→ <strong>Backtracking</strong> is almost always the answer. Generate all possibilities using recursion with choice/no-choice pattern.</p>
+        </div>
+
+        <div class="output-item">
+            <h3>Single Number (max/min profit, cost, ways, jumps)</h3>
+            <p>→ <strong>Dynamic Programming</strong> for optimization, <strong>Greedy</strong> for local optimal choices, <strong>Mathematical</strong> approach for counting.</p>
+        </div>
+
+        <div class="output-item">
+            <h3>Modified Array/String (in-place operations)</h3>
+            <p>→ <strong>Two Pointers</strong> for in-place modifications, space optimization techniques.</p>
+        </div>
+
+        <div class="output-item">
+            <h3>Ordered List (sorted sequence, valid task order)</h3>
+            <p>→ <strong>Sorting</strong> with custom comparators, <strong>Topological Sort</strong> for dependencies, <strong>Heap</strong> for maintaining order.</p>
+        </div>
+
+        <div class="output-item">
+            <h3>Boolean (true/false, possible/impossible)</h3>
+            <p>→ <strong>Dynamic Programming</strong> with boolean states, <strong>Greedy</strong> validation, or <strong>Graph</strong> reachability.</p>
+        </div>
+    </div>
+
+    <!-- Step 4: Keywords -->
+    <div class="section">
+        <h2 class="section-title">Step 4: Keyword Pattern Recognition</h2>
+
+        <div class="grid">
+            <div class="keyword-card dp-card">
+                <h3>🔷 Dynamic Programming</h3>
+                <ul>
+                    <li>"Number of ways"</li>
+                    <li>"Maximum/minimum" + "sum/profit/cost"</li>
+                    <li>"Can you reach"</li>
+                    <li>"Longest/shortest subsequence"</li>
+                    <li>"Optimal" or "best"</li>
+                    <li>"Count distinct"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card twopointer-card">
+                <h3>↔️ Two Pointers</h3>
+                <ul>
+                    <li>"Palindrome"</li>
+                    <li>"Sorted array"</li>
+                    <li>"Target sum"</li>
+                    <li>"Remove duplicates"</li>
+                    <li>"In-place"</li>
+                    <li>"Pair with sum"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card heap-card">
+                <h3>📊 Heap/Priority Queue</h3>
+                <ul>
+                    <li>"K largest" or "K smallest"</li>
+                    <li>"Top K elements"</li>
+                    <li>"Median"</li>
+                    <li>"Priority"</li>
+                    <li>"Kth element"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card stack-card">
+                <h3>📚 Stack</h3>
+                <ul>
+                    <li>"Parentheses" or "brackets"</li>
+                    <li>"Valid expression"</li>
+                    <li>"Nested structure"</li>
+                    <li>"Undo operations"</li>
+                    <li>"Calculator"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card monotonic-card">
+                <h3>📈 Monotonic Stack</h3>
+                <ul>
+                    <li>"Next greater element"</li>
+                    <li>"Next smaller element"</li>
+                    <li>"Previous greater/smaller"</li>
+                    <li>"Maximum rectangle"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card hashmap-card">
+                <h3>🗺️ HashMap/HashSet</h3>
+                <ul>
+                    <li>"Count frequency"</li>
+                    <li>"Find duplicates"</li>
+                    <li>"Anagram"</li>
+                    <li>"Two sum"</li>
+                    <li>"Subarray sum equals K"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card trie-card">
+                <h3>🌳 Trie</h3>
+                <ul>
+                    <li>"Word search"</li>
+                    <li>"Word prefixes"</li>
+                    <li>"Dictionary"</li>
+                    <li>"Autocomplete"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card greedy-card">
+                <h3>🎯 Greedy</h3>
+                <ul>
+                    <li>"Minimum operations"</li>
+                    <li>"Maximum intervals"</li>
+                    <li>"Jump game"</li>
+                    <li>"Activity selection"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card union-card">
+                <h3>🔗 Union Find</h3>
+                <ul>
+                    <li>"Connected components"</li>
+                    <li>"Number of groups"</li>
+                    <li>"Friends circles"</li>
+                    <li>"Redundant connection"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card binary-card">
+                <h3>🔍 Binary Search</h3>
+                <ul>
+                    <li>"Search in sorted"</li>
+                    <li>"Minimize maximum"</li>
+                    <li>"Maximize minimum"</li>
+                    <li>"First/last occurrence"</li>
+                    <li>"Kth element in sorted"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card bit-card">
+                <h3>⚡ Bit Manipulation</h3>
+                <ul>
+                    <li>"XOR" operations</li>
+                    <li>"Single number" problems</li>
+                    <li>"Power of 2"</li>
+                    <li>"Count set bits"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card math-card">
+                <h3>📐 Math/Geometry</h3>
+                <ul>
+                    <li>"GCD/LCM"</li>
+                    <li>"Prime numbers"</li>
+                    <li>"Angle calculations"</li>
+                    <li>"Coordinate geometry"</li>
+                    <li>"Factorial"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card game-card">
+                <h3>🎮 Game Theory</h3>
+                <ul>
+                    <li>"Optimal strategy"</li>
+                    <li>"Win/lose scenarios"</li>
+                    <li>"Minimax"</li>
+                    <li>"Nim game"</li>
+                </ul>
+            </div>
+
+            <div class="keyword-card sliding-card">
+                <h3>🪟 Sliding Window</h3>
+                <ul>
+                    <li>"Substring" with conditions</li>
+                    <li>"Subarray" with fixed/variable size</li>
+                    <li>"Maximum/minimum window"</li>
+                    <li>"Contains all characters"</li>
+                    <li>"Longest substring"</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Tips -->
+    <div class="tips-box">
+        <h2>💡 Quick Tips</h2>
+        <ul>
+            <li>• Always read constraints first to eliminate impossible approaches</li>
+            <li>• Look for keywords in the problem statement that hint at specific algorithms</li>
+            <li>• If asked for "all possible" solutions, think backtracking</li>
+            <li>• If asked for "optimal" solution with states, think dynamic programming</li>
+            <li>• For "in-place" modifications, consider two pointers or bit manipulation</li>
+            <li>• When dealing with ranges or intervals, sorting often helps</li>
+            <li>• Draw examples and trace through algorithms manually before coding</li>
+        </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Happy Coding! 🚀</p>
+    </div>
+</div>
+</body>
+</html>
