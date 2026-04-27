@@ -36,27 +36,35 @@ public class BoundaryTraversal {
         root1.left.right.left = new TreeNode(8);
         root1.left.right.right = new TreeNode(9);
 
-        System.out.println("Test Case 1 (Standard): " + boundary(root1));
-        // Expected: [1, 2, 4, 8, 9, 6, 7, 3]
+        System.out.println("--- Test Case 1 (Standard) ---");
+        TreeNode.printTreeWithLines(root1);
+        System.out.println("Boundary: " + boundary(root1));
+        System.out.println();
 
         // Test Case 2: Single Node
         TreeNode root2 = new TreeNode(10);
-        System.out.println("Test Case 2 (Single): " + boundary(root2));
-        // Expected: [10]
+        System.out.println("--- Test Case 2 (Single Node) ---");
+        TreeNode.printTreeWithLines(root2);
+        System.out.println("Boundary: " + boundary(root2));
+        System.out.println();
 
         // Test Case 3: Left Skewed
         TreeNode root3 = new TreeNode(1);
         root3.left = new TreeNode(2);
         root3.left.left = new TreeNode(3);
-        System.out.println("Test Case 3 (Left Skewed): " + boundary(root3));
-        // Expected: [1, 2, 3]
+        System.out.println("--- Test Case 3 (Left Skewed) ---");
+        TreeNode.printTreeWithLines(root3);
+        System.out.println("Boundary: " + boundary(root3));
+        System.out.println();
 
         // Test Case 4: Right Skewed
         TreeNode root4 = new TreeNode(1);
         root4.right = new TreeNode(2);
         root4.right.right = new TreeNode(3);
-        System.out.println("Test Case 4 (Right Skewed): " + boundary(root4));
-        // Expected: [1, 3, 2]
+        System.out.println("--- Test Case 4 (Right Skewed) ---");
+        TreeNode.printTreeWithLines(root4);
+        System.out.println("Boundary: " + boundary(root4));
+        System.out.println();
     }
 
     public static List<Integer> boundary(TreeNode root) {
