@@ -1,8 +1,6 @@
 package a_15_Binary_Tree.Custom;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TreeNode {
     public int val;
