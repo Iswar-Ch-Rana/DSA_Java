@@ -6,17 +6,21 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Serialize and Deserialize a Binary Tree (BFS / Level-order).
+ * Serialize and Deserialize a Binary Tree — 2 approaches.
  * <p>
- * Serialize : BFS; write node values and "n" for nulls into a space-separated string.
- * Deserialize: Rebuild level-by-level — each dequeued parent consumes the next two tokens
- * (left child, right child) from the token array.
+ * Approach 1 (DFS / Preorder):
+ * Serialize : Preorder DFS; write value then recurse left and right; "n" for null.
+ * Deserialize: Preorder DFS consumes tokens left-to-right using an int[] index pointer.
+ * Time: O(N)  Space: O(H) recursion stack
  * <p>
- * Time  : O(N) for both serialize and deserialize.
- * Space : O(N) for queue + output string.
+ * Approach 2 (BFS / Level-order):
+ * Serialize : Level-order BFS; enqueue nulls too so token stream stays aligned.
+ * Deserialize: Level-order BFS; each dequeued parent consumes the next 2 tokens.
+ * Time: O(N)  Space: O(N) queue
  * <p>
- * Key insight: null markers ("n") in the serialized string are what allow
- * exact reconstruction — without them, tree shape is ambiguous.
+ * Key insight: null markers ("n") are mandatory — without them tree shape is ambiguous.
+ * Key gotcha : BFS queue must be LinkedList (not ArrayDeque) — ArrayDeque rejects nulls.
+ * Key gotcha : DFS deserialize index must be int[] (not int field) — resets per call.
  */
 public class SerializeAndDeSerializeBT {
 
@@ -24,15 +28,55 @@ public class SerializeAndDeSerializeBT {
     private static final String DELIMITER = " ";
 
     // ─────────────────────────────────────────────────────────────
-    // Serialize: BFS → space-separated string
+    // Approach 1 — DFS (Preorder)
     // ─────────────────────────────────────────────────────────────
-    public String serialize(TreeNode root) {
+
+    // Preorder DFS: root → left → right; write "n" for null nodes.
+    public String serializeDFS(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        dfsSerialize(root, sb);
+        return sb.toString().trim();
+    }
+
+    private void dfsSerialize(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append(NULL_MARKER).append(DELIMITER);
+            return;
+        }
+        sb.append(node.val).append(DELIMITER);
+        dfsSerialize(node.left, sb);
+        dfsSerialize(node.right, sb);
+    }
+
+    // int[] used as mutable index — avoids instance-variable bug across multiple calls.
+    public TreeNode deserializeDFS(String data) {
+        if (data == null || data.isEmpty()) return null;
+        String[] tokens = data.split(DELIMITER);
+        return dfsDeserialize(tokens, new int[]{0});
+    }
+
+    private TreeNode dfsDeserialize(String[] tokens, int[] idx) {
+        if (idx[0] >= tokens.length) return null;
+
+        String token = tokens[idx[0]++];
+        if (token.equals(NULL_MARKER)) return null;
+
+        TreeNode node = new TreeNode(Integer.parseInt(token));
+        node.left = dfsDeserialize(tokens, idx); // consume left subtree tokens
+        node.right = dfsDeserialize(tokens, idx); // consume right subtree tokens
+        return node;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // Approach 2 — BFS (Level-order)
+    // ─────────────────────────────────────────────────────────────
+
+    // Level-order BFS: enqueue both children (even nulls) to preserve shape.
+    // LinkedList used — ArrayDeque would throw NullPointerException on null enqueue.
+    public String serializeBFS(TreeNode root) {
         if (root == null) return "";
 
         StringBuilder sb = new StringBuilder();
-        // LinkedList is used here (not ArrayDeque) because it allows null elements.
-        // We enqueue null children so their "n" marker is written when dequeued,
-        // keeping the token stream perfectly aligned for deserialization.
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
 
@@ -40,24 +84,20 @@ public class SerializeAndDeSerializeBT {
             TreeNode current = queue.poll();
 
             if (current == null) {
-                // Null node → write marker; do not enqueue further children.
                 sb.append(NULL_MARKER).append(DELIMITER);
                 continue;
             }
 
             sb.append(current.val).append(DELIMITER);
-            // Enqueue both children (even if null) to preserve tree shape.
-            queue.add(current.left);
+            queue.add(current.left);  // enqueue even if null
             queue.add(current.right);
         }
 
         return sb.toString().trim();
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Deserialize: token array → tree (BFS, consuming 2 tokens per parent)
-    // ─────────────────────────────────────────────────────────────
-    public TreeNode deserialize(String data) {
+    // Each dequeued parent consumes the next 2 tokens: left child, right child.
+    public TreeNode deserializeBFS(String data) {
         if (data == null || data.isEmpty()) return null;
 
         String[] tokens = data.split(DELIMITER);
@@ -69,14 +109,12 @@ public class SerializeAndDeSerializeBT {
         for (int i = 1; i < tokens.length; i++) {
             TreeNode parent = queue.poll();
 
-            // Left child
             if (!tokens[i].equals(NULL_MARKER)) {
                 parent.left = new TreeNode(Integer.parseInt(tokens[i]));
                 queue.add(parent.left);
             }
 
-            // Right child (next token)
-            i++;
+            i++; // advance to right-child token
             if (i < tokens.length && !tokens[i].equals(NULL_MARKER)) {
                 parent.right = new TreeNode(Integer.parseInt(tokens[i]));
                 queue.add(parent.right);
@@ -87,7 +125,7 @@ public class SerializeAndDeSerializeBT {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Main
+    // Main — verify both approaches produce the same trees
     // ─────────────────────────────────────────────────────────────
     public static void main(String[] args) {
         SerializeAndDeSerializeBT codec = new SerializeAndDeSerializeBT();
@@ -103,20 +141,12 @@ public class SerializeAndDeSerializeBT {
         root1.right = new TreeNode(3);
         root1.right.left = new TreeNode(4);
         root1.right.right = new TreeNode(5);
-
-        String s1 = codec.serialize(root1);
-        System.out.println("TC1 Serialized  : " + s1);
-        System.out.println("TC1 Deserialized:");
-        TreeNode.printTreeWithLines(codec.deserialize(s1));
+        verify(codec, "TC1 Standard      ", root1);
 
         // Test Case 2: Single node
-        TreeNode root2 = new TreeNode(42);
-        String s2 = codec.serialize(root2);
-        System.out.println("TC2 Serialized  : " + s2);
-        System.out.println("TC2 Deserialized:");
-        TreeNode.printTreeWithLines(codec.deserialize(s2));
+        verify(codec, "TC2 Single node   ", new TreeNode(42));
 
-        // Test Case 3: Left-skewed
+        // Test Case 3: Skewed with gap
         //   1
         //  /
         // 2
@@ -125,15 +155,12 @@ public class SerializeAndDeSerializeBT {
         TreeNode root3 = new TreeNode(1);
         root3.left = new TreeNode(2);
         root3.left.right = new TreeNode(3);
-        String s3 = codec.serialize(root3);
-        System.out.println("TC3 Serialized  : " + s3);
-        System.out.println("TC3 Deserialized:");
-        TreeNode.printTreeWithLines(codec.deserialize(s3));
+        verify(codec, "TC3 Skewed+gap    ", root3);
 
         // Test Case 4: null root
-        String s4 = codec.serialize(null);
-        System.out.println("TC4 Serialized  : '" + s4 + "'");
-        System.out.println("TC4 Deserialized: " + codec.deserialize(s4)); // null
+        System.out.println("TC4 null root DFS : '" + codec.serializeDFS(null) + "'");
+        System.out.println("TC4 null root BFS : '" + codec.serializeBFS(null) + "'");
+        System.out.println();
 
         // Test Case 5: Full binary tree
         //        1
@@ -148,9 +175,18 @@ public class SerializeAndDeSerializeBT {
         root5.left.right = new TreeNode(5);
         root5.right.left = new TreeNode(6);
         root5.right.right = new TreeNode(7);
-        String s5 = codec.serialize(root5);
-        System.out.println("TC5 Serialized  : " + s5);
-        System.out.println("TC5 Deserialized:");
-        TreeNode.printTreeWithLines(codec.deserialize(s5));
+        verify(codec, "TC5 Full BT       ", root5);
+    }
+
+    private static void verify(SerializeAndDeSerializeBT codec, String label, TreeNode root) {
+        String dfs = codec.serializeDFS(root);
+        String bfs = codec.serializeBFS(root);
+        System.out.println(label + " DFS serialized : " + dfs);
+        System.out.println(label + " BFS serialized : " + bfs);
+        System.out.println(label + " DFS deserialized:");
+        TreeNode.printTreeWithLines(codec.deserializeDFS(dfs));
+        System.out.println(label + " BFS deserialized:");
+        TreeNode.printTreeWithLines(codec.deserializeBFS(bfs));
+        System.out.println();
     }
 }
