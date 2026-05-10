@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Morris Inorder Traversal — O(N) time, O(1) space (no stack, no recursion).
  * <p>
+ * demo
  * Idea: Temporarily thread each node's inorder predecessor's right pointer back
  * to the current node so we can "return" to it after finishing its left subtree.
  * <p>
