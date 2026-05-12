@@ -1,4 +1,4 @@
-package a_15_Binary_Tree.Binary_Search_Tree;
+package a_16_Binary_Search_Tree.Basics;
 
 import a_15_Binary_Tree.Custom.TreeNode;
 
