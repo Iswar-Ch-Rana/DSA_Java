@@ -24,6 +24,21 @@ import java.util.List;
  */
 public class MorrisPreorderTraversal {
 
+    /*
+     * Mental Model:
+     *
+     *   if no left:
+     *       VISIT, go right
+     *
+     *   else:
+     *       find predecessor (rightmost of left subtree)
+     *
+     *       if thread absent:
+     *           VISIT, create thread, go left
+     *
+     *       if thread present:
+     *           remove thread, go right
+     */
     public List<Integer> getPreorder(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         if (root == null) return result;
