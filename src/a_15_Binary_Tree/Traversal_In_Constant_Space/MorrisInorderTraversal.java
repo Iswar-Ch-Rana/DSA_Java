@@ -21,6 +21,21 @@ import java.util.List;
  */
 public class MorrisInorderTraversal {
 
+    /*
+     * Mental Model:
+     *
+     *   if no left:
+     *       VISIT, go right
+     *
+     *   else:
+     *       find predecessor (rightmost of left subtree)
+     *
+     *       if thread absent:
+     *           create thread, go left
+     *
+     *       if thread present:
+     *           remove thread, VISIT, go right
+     */
     public List<Integer> getInorder(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         TreeNode current = root;

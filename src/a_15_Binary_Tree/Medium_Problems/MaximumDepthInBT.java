@@ -40,6 +40,17 @@ public class MaximumDepthInBT {
     }
 
 
+    /*
+     * Mental Model — Recursive:
+     *
+     *   if null → return 0
+     *   return 1 + max(depth(left), depth(right))
+     *
+     * Mental Model — Iterative (BFS):
+     *
+     *   count levels in level-order traversal
+     *   depth++ per level processed
+     */
     public static int maxDepth(TreeNode root) {
         if (root == null) return 0;
 

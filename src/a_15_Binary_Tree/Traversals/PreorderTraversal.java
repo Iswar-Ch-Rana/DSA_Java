@@ -17,6 +17,14 @@ public class PreorderTraversal {
         System.out.println(list);
     }
 
+    /*
+     * Mental Model:
+     *
+     *   if null → return
+     *   VISIT
+     *   go left
+     *   go right
+     */
     public static void recursivePreorder(TreeNode root, List<Integer> list) {
         if (root == null) {
             return;

@@ -35,6 +35,17 @@ public class CheckForBalancedBinaryTree {
         return height != -1;
     }
 
+    /*
+     * Mental Model (checkHeight):
+     *
+     *   if null → return 0
+     *   get leftHeight  → if -1, return -1 early
+     *   get rightHeight → if -1, return -1 early
+     *   if |left - right| > 1 → return -1   (unbalanced signal)
+     *   else → return 1 + max(left, right)
+     *
+     *   Caller: balanced = (checkHeight(root) != -1)
+     */
     public static int checkHeight(TreeNode node) {
         if (node == null) return 0;
 

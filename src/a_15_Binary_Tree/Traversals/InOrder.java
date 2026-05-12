@@ -28,6 +28,14 @@ public class InOrder {
         System.out.println(list1);
     }
 
+    /*
+     * Mental Model — Recursive:
+     *
+     *   if null → return
+     *   go left
+     *   VISIT
+     *   go right
+     */
     public static void recursiveInorder(TreeNode root, List<Integer> list) {
         if (root == null) {
             return;
@@ -38,6 +46,15 @@ public class InOrder {
         recursiveInorder(root.right, list);
     }
 
+    /*
+     * Mental Model — Iterative (Stack):
+     *
+     *   loop forever:
+     *     if current != null → push, go left
+     *     else:
+     *       if stack empty → break
+     *       pop → VISIT → go right
+     */
     public static void iterativeInorder(TreeNode root, List<Integer> list) {
         if (root == null) {
             return;

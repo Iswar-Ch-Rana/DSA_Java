@@ -35,6 +35,14 @@ public class ZigZagOrSpiralTraversal {
 
     }
 
+    /*
+     * Mental Model:
+     *
+     *   BFS level-order + direction flag:
+     *     flag = true  → fill index left-to-right  (index = i)
+     *     flag = false → fill index right-to-left  (index = size - 1 - i)
+     *     flip flag after each level
+     */
     public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         Queue<TreeNode> queue = new ArrayDeque<>();
 

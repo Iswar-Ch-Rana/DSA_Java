@@ -35,6 +35,14 @@ public class CheckForSymmetricalBTs {
         return checkSymmetric(root.left, root.right);
     }
 
+    /*
+     * Mental Model (mirror check):
+     *
+     *   both null       → true
+     *   one null        → false
+     *   values differ   → false
+     *   recurse mirrors → (left.left, right.right) AND (left.right, right.left)
+     */
     private static boolean checkSymmetric(TreeNode left, TreeNode right) {
         // Case 1: both null
         if (left == null && right == null) return true;

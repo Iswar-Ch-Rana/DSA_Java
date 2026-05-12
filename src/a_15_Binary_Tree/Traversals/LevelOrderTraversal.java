@@ -18,6 +18,15 @@ public class LevelOrderTraversal {
         System.out.println(levelOrder(root));
     }
 
+    /*
+     * Mental Model:
+     *
+     *   enqueue root
+     *   while queue not empty:
+     *     snapshot level size
+     *     process all nodes of this level → enqueue their children
+     *     add level list to result
+     */
     public static List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) return result;

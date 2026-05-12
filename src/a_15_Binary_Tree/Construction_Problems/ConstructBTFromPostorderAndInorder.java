@@ -81,6 +81,16 @@ public class ConstructBTFromPostorderAndInorder {
      * @param start           left boundary in inorder
      * @param end             right boundary in inorder
      */
+    /*
+     * Mental Model:
+     *
+     *   postorder[index--] → root of current subtree (start from end)
+     *   find root in inorder → left of it = left subtree, right = right subtree
+     *   recurse RIGHT first (inorderIdx+1, end), then LEFT (start, inorderIdx-1)
+     *
+     *   index starts at end, decrements backward (right → left in postorder)
+     *   ← only diff vs Preorder: index direction + right before left
+     */
     private static TreeNode buildSubTree(
             int[] postorder,
             Map<Integer, Integer> inorderIndexMap,

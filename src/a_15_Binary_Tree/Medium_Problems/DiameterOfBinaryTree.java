@@ -38,6 +38,15 @@ public class DiameterOfBinaryTree {
         return diameter[0];
     }
 
+    /*
+     * Mental Model (height helper):
+     *
+     *   if null → return 0
+     *   leftH  = height(left)
+     *   rightH = height(right)
+     *   update globalMax with (leftH + rightH)   ← diameter through this node
+     *   return max(leftH, rightH) + 1            ← height to parent
+     */
     private static int height(TreeNode node, int[] diameter) {
         if (node == null) return 0;
         int leftHeight = height(node.left, diameter);

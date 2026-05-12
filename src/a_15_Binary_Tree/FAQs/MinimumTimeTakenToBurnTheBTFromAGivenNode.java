@@ -20,6 +20,16 @@ import java.util.*;
 public class MinimumTimeTakenToBurnTheBTFromAGivenNode {
 
     // ─── Entry Point ──────────────────────────────────────────────
+    /*
+     * Mental Model:
+     *
+     *   Step 1: Build parent map + find start node
+     *           (swap DFS ↔ BFS to change approach)
+     *
+     *   Step 2: BFS from start, spread fire each second to:
+     *           left child, right child, parent
+     *           time = levels processed - 1
+     */
     public static int timeToBurnTree(TreeNode root, int start) {
         if (root == null) return 0;
 

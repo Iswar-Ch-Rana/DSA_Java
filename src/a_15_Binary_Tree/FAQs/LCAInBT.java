@@ -58,6 +58,16 @@ public class LCAInBT {
         System.out.println();
     }
 
+    /*
+     * Mental Model:
+     *
+     *   if null, or node == p, or node == q → return node
+     *   left  = LCA(root.left,  p, q)
+     *   right = LCA(root.right, p, q)
+     *
+     *   both non-null → current node is the LCA
+     *   one non-null  → return that side (LCA is deeper or p/q found)
+     */
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // Base case: if root is null or we found either p or q
         if (root == null || root == p || root == q) return root;

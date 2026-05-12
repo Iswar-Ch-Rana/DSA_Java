@@ -30,6 +30,13 @@ public class PrePostInorderInOneTraversal {
         return result;
     }
 
+    /*
+     * Mental Model — single DFS pass, collect at 3 different moments:
+     *
+     *   ENTER node  → preorder  (collect before going left)
+     *   BETWEEN     → inorder   (collect after left, before right)
+     *   EXIT node   → postorder (collect after both children)
+     */
     private static void dfs(TreeNode node,
                             List<Integer> preorder,
                             List<Integer> inorder,

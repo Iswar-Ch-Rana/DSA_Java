@@ -23,6 +23,13 @@ public class PrintAllNodesAtADistanceOfKInBT {
         System.out.println(distanceK(root, root.left, 3)); // [0,8]
     }
 
+    /*
+     * Mental Model:
+     *
+     *   Step 1: Build parent map (BFS from root)
+     *   Step 2: BFS from target, spreading to left, right, parent
+     *           stop when level == k → collect all nodes in queue
+     */
     public static List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         List<Integer> ans = new ArrayList<>();
         if (root == null) return ans;

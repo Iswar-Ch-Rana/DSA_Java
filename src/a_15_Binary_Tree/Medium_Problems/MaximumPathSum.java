@@ -26,6 +26,15 @@ public class MaximumPathSum {
         return maxSum;
     }
 
+    /*
+     * Mental Model (maxGain):
+     *
+     *   if null → return 0
+     *   leftGain  = max(0, gain(left))    ← discard negatives
+     *   rightGain = max(0, gain(right))
+     *   update globalMax with (node + left + right)  ← path through this node
+     *   return node + max(left, right)               ← best single-arm to parent
+     */
     private static int maxGain(TreeNode node) {
         if (node == null) return 0;
 

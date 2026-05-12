@@ -47,6 +47,16 @@ public class MaximumWidthOfBT {
         }
     }
 
+    /*
+     * Mental Model:
+     *
+     *   BFS with node index (like heap):
+     *     left child  → 2 * index + 1
+     *     right child → 2 * index + 2
+     *     normalize index by subtracting level's first index (prevents overflow)
+     *     width of level = last - first + 1
+     *     track global max
+     */
     public static int widthOfBinaryTree(TreeNode root) {
         if (root == null) return 0;
 

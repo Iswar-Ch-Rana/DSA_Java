@@ -63,6 +63,14 @@ public class PrintRootToLeafPathInBT {
         return ans;
     }
 
+    /*
+     * Mental Model (backtracking DFS):
+     *
+     *   add node to path
+     *   if leaf → record copy of path
+     *   else    → recurse left, recurse right
+     *   remove node from path   ← backtrack
+     */
     private static void solve(TreeNode node, List<Integer> path, List<List<Integer>> ans) {
         if (node == null) return;
 

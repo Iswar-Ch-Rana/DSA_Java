@@ -14,6 +14,16 @@ import java.util.*;
  * Space : O(H) — recursion stack (DFS) / queue (BFS), where H = tree height.
  */
 public class RightLeftViewOfBT {
+    /*
+     * Mental Model — Right View (DFS, right-first):
+     *
+     *   traverse right child before left
+     *   first node recorded per level = rightmost visible
+     *
+     * Mental Model — Left View (BFS):
+     *
+     *   peek first node in queue at start of each level = leftmost visible
+     */
     // --- Right Side View: DFS (right child first) ---
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<>();

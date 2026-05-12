@@ -21,6 +21,14 @@ public class CountTotalNodesInACompleteBT {
     // ─────────────────────────────────────────────────────────────
     // Method 1: Perfect-subtree shortcut (boundary height comparison)
     // ─────────────────────────────────────────────────────────────
+    /*
+     * Mental Model:
+     *
+     *   if leftDepth == rightDepth → perfect subtree → return (2^h - 1)
+     *   else → recurse on left and right, add 1 for root
+     *
+     *   Key: leftDepth goes left all the way, rightDepth goes right all the way
+     */
     private static int countNodes(TreeNode root) {
         if (root == null) {
             return 0;

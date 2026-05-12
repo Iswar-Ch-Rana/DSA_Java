@@ -44,6 +44,14 @@ public class VerticalOrderTraversal {
         System.out.println(obj.verticalOrder(root3)); // [[4], [2], [1, 5, 6], [3], [7]]
     }
 
+    /*
+     * Mental Model:
+     *
+     *   BFS with column index:
+     *     root = 0, left = col-1, right = col+1
+     *     collect values per column via TreeMap (auto-sorted left → right)
+     *     BFS ensures top-to-bottom order within each column
+     */
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {

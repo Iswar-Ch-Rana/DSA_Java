@@ -67,6 +67,15 @@ public class TopViewOfBT {
         }
     }
 
+    /*
+     * Mental Model:
+     *
+     *   BFS with horizontal distance (line):
+     *     root = 0, left = line-1, right = line+1
+     *     only write map[line] on FIRST visit
+     *     first node seen at each line = top-most
+     *   TreeMap keeps lines sorted left → right
+     */
     private static List<Integer> topView(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
         if (root == null) return ans;

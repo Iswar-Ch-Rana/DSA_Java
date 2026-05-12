@@ -56,6 +56,15 @@ public class BottomViewOfBT {
         }
     }
 
+    /*
+     * Mental Model:
+     *
+     *   BFS with horizontal distance (line):
+     *     root = 0, left = line-1, right = line+1
+     *     OVERWRITE map[line] on every visit
+     *     last node seen at each line = bottom-most
+     *   TreeMap keeps lines sorted left → right
+     */
     private static List<Integer> bottomView(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
         if (root == null) return ans;

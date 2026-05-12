@@ -17,6 +17,14 @@ public class PostorderTraversal {
         System.out.println(list);
     }
 
+    /*
+     * Mental Model:
+     *
+     *   if null → return
+     *   go left
+     *   go right
+     *   VISIT
+     */
     public static void recursivePostorder(TreeNode root, List<Integer> list) {
         if (root == null) {
             return;

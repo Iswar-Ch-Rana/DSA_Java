@@ -67,6 +67,14 @@ public class BoundaryTraversal {
         System.out.println();
     }
 
+    /*
+     * Mental Model:
+     *
+     *   1. root (if not leaf)
+     *   2. left boundary  → top-down,  skip leaves
+     *   3. all leaves     → left to right
+     *   4. right boundary → bottom-up, skip leaves (collect then reverse)
+     */
     public static List<Integer> boundary(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
         if (root == null) return ans;
