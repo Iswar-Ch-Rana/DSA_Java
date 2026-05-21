@@ -39,9 +39,9 @@ public class RearrangeArray {
         List<Integer> neg = new ArrayList<>();
 
         // Segregate the array into positives and negatives.
-        for (int i = 0; i < n; i++) {
-            if (nums[i] > 0) pos.add(nums[i]);
-            else neg.add(nums[i]);
+        for (int num : nums) {
+            if (num > 0) pos.add(num);
+            else neg.add(num);
         }
 
         // Positives on even indices, negatives on odd.
