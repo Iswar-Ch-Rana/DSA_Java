@@ -192,7 +192,7 @@ public class NumberOfIslands {
         // 0 1 0
         // 1 0 1
         // 4-dir → 5 islands (diagonals NOT connected)
-        // 8-dir → 1 island  (diagonals ARE connected)
+        // 8-dir → 1 islands (diagonals ARE connected)
         char[][] grid5a = {{'1', '0', '1'}, {'0', '1', '0'}, {'1', '0', '1'}};
         char[][] grid5b = {{'1', '0', '1'}, {'0', '1', '0'}, {'1', '0', '1'}};
         System.out.println("TC5 DFS4: " + obj.numIslandsDFS(grid5a)); // 5
