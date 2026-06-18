@@ -19,7 +19,7 @@ public class DistanceOfNearestCellHavingOne {
      * Mental Model:
      *
      *   Step 1: enqueue all 1-cells (distance = 0), mark visited
-     *   Step 2: BFS — for each neighbour:
+     *   Step 2: BFS — for each neighbor:
      *               if not visited → dist[nr][nc] = dist[r][c] + 1, enqueue
      *   Result: dist[r][c] = shortest distance from (r,c) to nearest 1
      *
