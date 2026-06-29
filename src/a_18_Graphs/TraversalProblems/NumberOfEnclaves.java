@@ -36,7 +36,7 @@ public class NumberOfEnclaves {
         int cols = grid[0].length;
         boolean[][] visited = new boolean[rows][cols];
 
-        // Step 1: flood-fill from every boundary land cell
+        // Step 1: flood-fill from every boundary land cell.
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 if (isBoundary(r, c, rows, cols) && grid[r][c] == 1) {
