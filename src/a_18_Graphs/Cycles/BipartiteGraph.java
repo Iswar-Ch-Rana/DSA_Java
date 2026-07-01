@@ -1,10 +1,6 @@
 package a_18_Graphs.Cycles;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Bipartite Graph — check if the graph can be 2-coloured with no two adjacent nodes sharing a colour.
@@ -129,8 +125,8 @@ public class BipartiteGraph {
         //   0 - 1
         //   |   |
         //   3 - 2
-        List<Integer>[] g1a = buildAdj(4, new int[][]{{0,1},{1,2},{2,3},{3,0}});
-        List<Integer>[] g1b = buildAdj(4, new int[][]{{0,1},{1,2},{2,3},{3,0}});
+        List<Integer>[] g1a = buildAdj(4, new int[][]{{0, 1}, {1, 2}, {2, 3}, {3, 0}});
+        List<Integer>[] g1b = buildAdj(4, new int[][]{{0, 1}, {1, 2}, {2, 3}, {3, 0}});
         System.out.println("TC1 DFS: " + obj.isBipartiteDFS(4, g1a)); // true
         System.out.println("TC1 BFS: " + obj.isBipartiteBFS(4, g1b)); // true
 
@@ -138,22 +134,22 @@ public class BipartiteGraph {
         //   0 - 1
         //    \ /
         //     2
-        List<Integer>[] g2a = buildAdj(3, new int[][]{{0,1},{1,2},{2,0}});
-        List<Integer>[] g2b = buildAdj(3, new int[][]{{0,1},{1,2},{2,0}});
+        List<Integer>[] g2a = buildAdj(3, new int[][]{{0, 1}, {1, 2}, {2, 0}});
+        List<Integer>[] g2b = buildAdj(3, new int[][]{{0, 1}, {1, 2}, {2, 0}});
         System.out.println("TC2 DFS: " + obj.isBipartiteDFS(3, g2a)); // false
         System.out.println("TC2 BFS: " + obj.isBipartiteBFS(3, g2b)); // false
 
         // TC3: disconnected — one component is NOT bipartite
         //   0 - 1   (bipartite)    2 - 3 - 4 - 2  (triangle, not bipartite)
-        List<Integer>[] g3a = buildAdj(5, new int[][]{{0,1},{2,3},{3,4},{4,2}});
-        List<Integer>[] g3b = buildAdj(5, new int[][]{{0,1},{2,3},{3,4},{4,2}});
+        List<Integer>[] g3a = buildAdj(5, new int[][]{{0, 1}, {2, 3}, {3, 4}, {4, 2}});
+        List<Integer>[] g3b = buildAdj(5, new int[][]{{0, 1}, {2, 3}, {3, 4}, {4, 2}});
         System.out.println("TC3 DFS: " + obj.isBipartiteDFS(5, g3a)); // false
         System.out.println("TC3 BFS: " + obj.isBipartiteBFS(5, g3b)); // false
 
         // TC4: simple path (no cycle) — always bipartite
         //   0 - 1 - 2 - 3
-        List<Integer>[] g4a = buildAdj(4, new int[][]{{0,1},{1,2},{2,3}});
-        List<Integer>[] g4b = buildAdj(4, new int[][]{{0,1},{1,2},{2,3}});
+        List<Integer>[] g4a = buildAdj(4, new int[][]{{0, 1}, {1, 2}, {2, 3}});
+        List<Integer>[] g4b = buildAdj(4, new int[][]{{0, 1}, {1, 2}, {2, 3}});
         System.out.println("TC4 DFS: " + obj.isBipartiteDFS(4, g4a)); // true
         System.out.println("TC4 BFS: " + obj.isBipartiteBFS(4, g4b)); // true
 
