@@ -1,21 +1,17 @@
 package a_18_Graphs.Hard_Problems;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Alien Dictionary — deduce the character ordering of an alien alphabet from a sorted word list.
  * <p>
  * Idea:
  * Step 1: Compare each adjacent word pair — the first mismatched character gives a directed
- *         ordering constraint: w1[j] → w2[j] (w1[j] comes before w2[j] in the alien alphabet).
+ * ordering constraint: w1[j] → w2[j] (w1[j] comes before w2[j] in the alien alphabet).
  * Step 2: Build a directed graph on the K alien characters using those constraints.
  * Step 3: Topological sort of the graph = the alien alphabet order.
- *         If a cycle exists (contradictory constraints) → return "".
- *         If a word is a prefix of the previous word (e.g. "abc" before "ab") → return "".
+ * If a cycle exists (contradictory constraints) → return "".
+ * If a word is a prefix of the previous word (e.g. "abc" before "ab") → return "".
  * <p>
  * Time  : O(N × L + K) — N words of max length L to extract edges, K characters for topo sort.
  * Space : O(K)         — adjacency list on K ≤ 26 characters.
@@ -49,7 +45,7 @@ public class AlienDictionary {
 
         boolean[] present = presentLetters(words);
         boolean[] visited = new boolean[26];
-        boolean[] inPath  = new boolean[26];
+        boolean[] inPath = new boolean[26];
         Deque<Integer> stack = new ArrayDeque<>();
 
         for (int i = 0; i < 26; i++) {
@@ -71,7 +67,7 @@ public class AlienDictionary {
     private boolean hasCycle(int node, List<Integer>[] adj,
                              boolean[] visited, boolean[] inPath, Deque<Integer> stack) {
         visited[node] = true;
-        inPath[node]  = true;
+        inPath[node] = true;
 
         for (int neighbour : adj[node]) {
             if (inPath[neighbour]) return true;
